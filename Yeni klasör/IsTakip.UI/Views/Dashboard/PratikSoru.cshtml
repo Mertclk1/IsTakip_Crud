@@ -1,0 +1,131 @@
+﻿@{
+	ViewData["Title"] = "PratikSoru";
+	Layout = "~/Views/Shared/_IsTakipLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript rastgele sayı üretme</title>
+
+</head>
+<body>
+
+    <label for="txtElemanSayisi">Eleman Sayısı :</label>
+    <input type="text" id="txtElemanSayisi" name="txtElemanSayisi">
+    <br>
+    <br>
+    <label for="txtBaslangicDegeri">Başlangıç Değeri :</label>
+    <input type="text" id="txtBaslangicDegeri" name="txtBaslangicDegeri">
+    <br>
+    <br>
+    <label for="txtBitisDegeri">Bitiş Değeri : </label>
+    <input type="text" id="txtBitisDegeri" name="txtBitisDegeri">
+    <br>
+    <br>
+    <button onclick="sayiUret();">Sayı üret</button>
+    <br>
+    <br>
+    <div id="sayi"></div>
+    <br>
+    <div id="tekSayi"></div>
+    <br>
+    <div id="ciftSayi"></div>
+
+    <script>
+        function sayiUret() {
+
+            var elemanSayisi = document.getElementById("txtElemanSayisi").value;
+            var baslangicDegeri = document.getElementById("txtBaslangicDegeri").value;
+            var bitisDegeri = document.getElementById("txtBitisDegeri").value;
+
+
+
+            if (elemanSayisi.trim() == "" || baslangicDegeri.trim() == "" || bitisDegeri.trim() == "") {
+                alert("Lütfen tüm değerleri girmiş olduğunuzdan emin olun.");
+            }
+
+            else if (isNaN(elemanSayisi) || isNaN(baslangicDegeri) || isNaN(bitisDegeri)) {
+                alert("Lütfen sayısal değer giriniz.");
+            }
+
+            else if (Number(baslangicDegeri) > Number(bitisDegeri)) {
+                alert("Başlangıç değeri, bitiş değerinden büyük olamaz. Lütfen tekrar deneyin.");
+            }
+
+            else {
+                var x = Number(baslangicDegeri);
+                var y = Number(bitisDegeri);
+                var z = Number(elemanSayisi);
+                var sayilar = randomInt(x, y, z);
+                document.getElementById("sayi").innerHTML = "Rastgele üretilen sayı dizisi: " + sayilar;
+                document.getElementById("tekSayi").innerHTML = tek(sayilar);
+                document.getElementById("ciftSayi").innerHTML = cift(sayilar);
+
+            }
+
+        }
+        function randomInt(min, max, sayi) {
+            var dizi = [];
+            for (let i = 0; i < sayi; i++) {
+                dizi[i] = Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            return dizi;
+        }
+        function tek(dizi) {
+            var tekSayi = [];
+            var toplamTek = 0;
+            var ortalama = 0;
+            var adet = 0;
+            var mesaj;
+
+            for (let i in dizi) {
+                if (dizi[i] % 2 == 1) {
+                    tekSayi.push(dizi[i]);
+                    toplamTek += dizi[i];
+                }
+            }
+            adet = tekSayi.length;
+            ortalama = toplamTek / tekSayi.length;
+            if (adet != 0) {
+                mesaj = `Tek sayılar : ${tekSayi}  -
+                        Tek sayıların toplamı : ${toplamTek}  -
+                        Tek sayıların adeti : ${adet}  -
+                        Tek sayıların ortalaması : ${ortalama}`;
+            } else {
+                mesaj = "Tek sayı bulunmamaktadır.";
+            }
+            return mesaj;
+        }
+
+        function cift(dizi) {
+            var ciftSayi = [];
+            var toplamCift = 0;
+            var ortalama = 0;
+            var adet = 0;
+            var mesaj;
+
+            for (let i in dizi) {
+                if (dizi[i] % 2 == 0) {
+                    ciftSayi.push(dizi[i]);
+                    toplamCift += dizi[i];
+                }
+            }
+            adet = ciftSayi.length;
+            ortalama = toplamCift / ciftSayi.length;
+            if (adet != 0) {
+                mesaj = `Çift sayılar : ${ciftSayi}  -
+                        Çift sayıların toplamı : ${toplamCift}  -
+                        Çift sayıların adeti : ${adet}  -
+                        Çift sayıların ortalaması : ${(ortalama)}`;
+            } else {
+                mesaj = "Çift sayı bulunmamaktadır.";
+            }
+            return mesaj;
+        }
+    </script>
+</body>
+</html>
+
